@@ -1,24 +1,76 @@
 
 # **AI Agent for Action Item Extraction from Chat Dialogues** 
 
-**1. Problem Statement:**
+## **1. Problem Statement:**
 
 In any collaborative environment, from student group projects to professional teams, important action items are often scattered throughout long and unstructured chat logs on platforms like WhatsApp, Discord, or Telegram. Manually sifting through hundreds of messages to identify tasks, owners, and deadlines is a time-consuming, tedious, and error-prone process. This inefficiency frequently leads to missed commitments and a lack of clarity on team responsibilities.
 
-**2. Solution Overview**
+## **2. Solution Overview**
 
 This project introduces an intelligent AI agent designed to automate the process of action item extraction. The agent ingests raw, unstructured chat dialogues and outputs a clean, structured list of tasks in JSON format. Each extracted item includes the core components of an actionable task: the task description, the assigned owner, and the specified due date.
 
 This tool transforms messy conversations into organized to-do lists, ensuring that no commitment is ever lost in the noise of a busy group chat.
 
-**3. Core Architecture & Key Features**
 
-The agent is built on a multi-component architecture, where each part has a specialized role:
 
-**Planner (LLM):** A general-purpose LLM that first analyzes the chat to determine the overall context and strategy.
+-----
 
-**Extractor (Fine-Tuned Model):** The core of the agent. This is a t5-small model that has been specifically fine-tuned using LoRA (Low-Rank Adaptation) for the single, critical task of generating reliable, schema-compliant JSON. By specializing the model, we achieve a much higher degree of accuracy and structural consistency than is possible with general-purpose prompting.
+## **Core Architecture & Key Features of AI Agent**
 
-**Validator & Executor:** Simple, rule-based modules that clean the generated JSON and format the final output.
+The architecture is a **hybrid system** that combines a specialized fine-tuned language model with a robust, multi-stage data processing pipeline. This design ensures high accuracy in extraction and guarantees the reliability and structural consistency of the final output, making it suitable for integration into downstream applications.
+The core of the agent is a **`google/flan-t5-base`** model adapted using **Low-Rank Adaptation (LoRA)**, which is then wrapped in a defensive pipeline for prompt engineering and output validation.
+
+
+### **2. Architectural Components**
+
+The system is composed of four primary modules that work in sequence.
+
+#### **2.1. Prompt Engineering Module**
+
+This module prepares the raw input text for the AI model. It's a critical component that frames the task and guides the model toward the desired output format.
+
+  * **Zero-Shot Instructions:** A set of rules and a schema definition are prepended to the input. This "system prompt" instructs the model on its role, the required JSON structure, and constraints (e.g., "Output MUST be valid JSON").
+  * **Few-Shot Examples:** Two complete examples of chat-to-JSON conversions are included in the prompt. This provides the model with concrete demonstrations, a technique known as in-context learning, which significantly improves accuracy and format adherence.
+  * **Reasoning for Choice:** This prompt-centric approach leverages the instruction-following capabilities of modern LLMs, reducing the need for massive datasets and complex model retraining. It makes the system's behavior more predictable and easier to debug.
+
+#### **2.2. The AI Engine (Core Model)**
+
+The AI engine is responsible for the core task of understanding the dialogue and generating the structured output.
+
+  * **Base Model:** **`google/flan-t5-base`**.
+      * **Reasoning:**
+        1.  **Encoder-Decoder Structure:** T5 is ideal for sequence-to-sequence tasks like translation and summarization, which is analogous to transforming unstructured chat into structured JSON.
+        2.  **Instruction-Tuned:** The "Flan" variant has been pre-trained to follow instructions, making it highly responsive to our prompt engineering module.
+        3.  **Performance Balance:** The `-base` size offers a strong balance between computational efficiency and extraction accuracy.
+  * **Fine-Tuning Method:** **Low-Rank Adaptation (LoRA)** with `merge_and_unload`.
+      * **Reasoning:**
+        1.  **Efficiency:** LoRA allows for efficient specialization of the model on the action-item task without retraining all 250M parameters, saving significant time and resources.
+        2.  **Inference Speed:** By merging the LoRA weights into the base model before deployment (`merge_and_unload`), we create a single, unified model. This eliminates any computational overhead during inference, ensuring the agent is as fast as the original T5 model.
+
+#### **2.3. Post-Processing & Validation Pipeline**
+
+This module acts as a "defensive" layer that cleans, repairs, and validates the raw text generated by the AI model. It ensures the final output is always machine-readable and structurally correct.
+
+  * **JSON Repair:** A series of functions that strip markdown, normalize quotes, fix common syntax errors (like trailing commas), and as a last resort, salvage key-value pairs from a malformed string using regular expressions.
+  * **Schema Enforcement:** A final check that validates the parsed data against the required schema (a list of objects, each with non-empty "task", "owner", and "due\_date" keys).
+  * **Reasoning for Choice:** LLMs can sometimes produce syntactically imperfect or "hallucinated" output. This robust validation pipeline is essential for production-grade reliability, preventing malformed data from causing errors in downstream systems.
+
+-----
+
+### **3. Interaction Flow**
+
+The data flows through the system in a linear sequence from user input to structured output. Each component processes the data and passes it to the next stage.
+
+1.  **Input:** The user provides a raw chat dialogue string.
+2.  **Prompting:** The **Prompt Engineering Module** wraps the user's input with zero-shot instructions and few-shot examples, creating a single, comprehensive prompt.
+3.  **Generation:** The **AI Engine (T5+LoRA Model)** processes the prompt and generates a raw text string, which is expected to be a JSON array.
+4.  **Validation:** The **Post-Processing & Validation Pipeline** receives the raw string, performs all cleaning and repair operations, parses the string into a Python object, and enforces the final schema.
+5.  **Output:** The system returns a clean, structured list of action items, typically formatted as a Pandas DataFrame for display.
+
+#### **Architecture Diagram**
+
+This diagram illustrates the flow of data through the agent's components.
+<img width="3328" height="3840" alt="Untitled diagram _ Mermaid Chart-2025-09-15-201348" src="https://github.com/user-attachments/assets/ac52a9f1-0bfb-41cb-a78c-5b8c17a7c9c1" />
+
 
 This project directly implements the core requirements of the assignment by building and integrating a custom fine-tuned model to solve a real-world automation problem.
