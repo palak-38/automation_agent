@@ -9,10 +9,6 @@ In any collaborative environment, from student group projects to professional te
 
 This project introduces an intelligent AI agent designed to automate the process of action item extraction. The agent ingests raw, unstructured chat dialogues and outputs a clean, structured list of tasks in JSON format. Each extracted item includes the core components of an actionable task: the task description, the assigned owner, and the specified due date.
 
-This tool transforms messy conversations into organized to-do lists, ensuring that no commitment is ever lost in the noise of a busy group chat.
-
-
-
 -----
 
 ## **Core Architecture & Key Features of AI Agent**
@@ -74,3 +70,8 @@ This diagram illustrates the flow of data through the agent's components.
 
 
 This project directly implements the core requirements of the assignment by building and integrating a custom fine-tuned model to solve a real-world automation problem.
+
+Below is a screenshot of the UI created via gradio, where we paste the chat and extract actionable items, with deadline and assignee.
+<img width="1919" height="908" alt="Screenshot 2025-09-16 001157" src="https://github.com/user-attachments/assets/f524d10d-6535-40b2-a102-0b218b90aecb" />
+
+
