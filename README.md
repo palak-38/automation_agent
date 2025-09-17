@@ -42,4 +42,4 @@ Below are the screenshots of the UI created via gradio, where we paste the chat 
 
 6. *Open the app in your browser*
     ```bash
-    http://127.0.0.1:5000
+    http://127.0.0.1:8000
