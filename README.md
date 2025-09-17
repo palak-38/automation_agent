@@ -63,15 +63,15 @@ The data flows through the system in a linear sequence from user input to struct
 4.  **Validation:** The **Post-Processing & Validation Pipeline** receives the raw string, performs all cleaning and repair operations, parses the string into a Python object, and enforces the final schema.
 5.  **Output:** The system returns a clean, structured list of action items, typically formatted as a Pandas DataFrame for display.
 
-#### **Architecture Diagram**
 
-This diagram illustrates the flow of data through the agent's components.
 <img width="3328" height="3840" alt="Untitled diagram _ Mermaid Chart-2025-09-15-201348" src="https://github.com/user-attachments/assets/ac52a9f1-0bfb-41cb-a78c-5b8c17a7c9c1" />
 
 
 This project directly implements the core requirements of the assignment by building and integrating a custom fine-tuned model to solve a real-world automation problem.
 
-Below is a screenshot of the UI created via gradio, where we paste the chat and extract actionable items, with deadline and assignee.
+Below are the screenshot of the UI created via gradio, where we paste the chat and extract actionable items, with deadline and assignee.
 <img width="1919" height="908" alt="Screenshot 2025-09-16 001157" src="https://github.com/user-attachments/assets/f524d10d-6535-40b2-a102-0b218b90aecb" />
+![WhatsApp Image 2025-09-17 at 12 13 50_1a222756](https://github.com/user-attachments/assets/d23be446-a3e9-4b86-9aff-d03cab33c20f)
+
 
 
