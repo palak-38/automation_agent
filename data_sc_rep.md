@@ -11,9 +11,9 @@
   Target JSON: `{ "task": "Meet at the main entrance to the university", "owner": "Katy", "due_date": "in 5 min" }`
 
 ### Method
-- **Model**: A sequence-to-sequence transformer (likely T5 or FLAN-T5, judging by JSON generation style).
+- **Model**:FLAN-T5 
 - **Training**: Fine-tuning on dialogue–JSON pairs.
-- **Objective**: Minimize text-to-text generation loss (cross-entropy).
+- **Objective**:Extract Action Items out of Group Chats along with Asignee and Deadline
 - **Evaluation Scripts**: Metrics computed include exact match, ROUGE-L, and Bag-of-Words F1.
 
 ---
@@ -25,7 +25,9 @@
   *Result: 0.0000 → model never produced an exact reference match.*
 - **ROUGE-L F1 (0.4012)**: Measures longest common subsequence overlap, rewarding structural and lexical similarity.
 - **BoW F1 (0.4112)**: Token-level overlap ignoring order.
-- **Average Prediction Length (18.89)** vs **Reference Length (28.06)**: Predictions were ~30% shorter, indicating missing details.
+  
+  <img width="1539" height="588" alt="Screenshot 2025-09-17 121947" src="https://github.com/user-attachments/assets/0e81c179-c085-451b-bcff-05de42c3a13e" />
+
 
 ### Procedure
 - Model was run on the **held-out test set (167 dialogues)**.
@@ -34,33 +36,8 @@
 
 ---
 
-## 3. Results and Outcomes
 
-### Quantitative Findings
-- **Exact Match = 0%**: Indicates difficulty in strict JSON matching. Small deviations (e.g., “Be at the entrance of the library” vs. “Meet at the main entrance to the university”) cause failure despite semantic similarity.
-- **ROUGE-L ≈ 0.40, BoW F1 ≈ 0.41**: Moderate lexical overlap — model captures partial task information but misses fine-grained phrasing or details.
-- **Length Mismatch**: Model under-generates, omitting contextual details (owner, task qualifiers).
 
-### Qualitative Findings
-- Example:  
-  **Reference**: “Meet at the main entrance to the university”  
-  **Prediction**: “Be at the entrance of the library”  
-  → Same intent (meet at entrance), but wrong location detail. Semantically close, but fails exact matching.
 
-### Interpretation
-- The model **understands dialogue intent partially** but struggles with:
-  - Precision in task phrasing.
-  - Maintaining all fields in JSON.
-  - Disambiguating similar entities (library vs. university entrance).
 
----
 
-## 4. Recommendations
-
-1. **Structured Decoding**: Constrain output with JSON schema (e.g., using constrained beam search).
-2. **Data Augmentation**: Add more varied phrasings for locations, owners, and time expressions.
-3. **Evaluation**: Introduce semantic similarity metrics (e.g., BERTScore) to complement strict exact match.
-4. **Post-Processing**: Apply repair heuristics (normalize due_date formats, enforce field presence).
-5. **Error Analysis**: Categorize errors (missing fields, wrong entity, truncation) to target improvements.
-
----
