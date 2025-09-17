@@ -1,5 +1,5 @@
-
-# **AI Agent for Action Item Extraction from Chat Dialogues** 
+ # **Submitted by: PALAK | MECHANICAL ENGINEERING | IIT JAMMU**
+# **AI AGENT FOR ACTION ITEMS EXTRACTION FORM CHAT DIALOGUE** 
 
 ## **1. Problem Statement:**
 
