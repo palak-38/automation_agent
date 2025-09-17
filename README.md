@@ -9,7 +9,7 @@ In any collaborative environment, from student group projects to professional te
 
 This project introduces an intelligent AI agent designed to automate the process of action item extraction. The agent ingests raw, unstructured chat dialogues and outputs a clean, structured list of tasks in JSON format. Each extracted item includes the core components of an actionable task: the task description, the assigned owner, and the specified due date.
 
-Please find Model Architecture, and Fine-Tuning setup in separate markdown **`(.md)`** files in the same repository.
+Please find Model Architecture, Fine Tuning Setup and Interaction Logs with the LLM in the info folder.
 
 
 -----
