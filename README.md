@@ -19,3 +19,27 @@ Below are the screenshots of the UI created via gradio, where we paste the chat 
 
 <img width="1919" height="908" alt="Screenshot 2025-09-16 001157" src="https://github.com/user-attachments/assets/e049bbe9-abf6-4fae-a6da-2da539c0d691" />
 
+----
+## 🚀 How to Use
+
+1. *Clone the repository*
+   bash
+   git clone <your-repo-url>
+   cd <your-repo-name>
+
+2. **Create and activate a new Conda environment**
+    ```bash
+    conda create -n chatapp python=3.10 -y
+    conda activate chatapp
+
+3. *Install the dependencies*
+    ```bash
+    pip install -r requirements.txt
+
+4. **Run the application**
+    ```bash
+    python app.py
+
+5. *Open the app in your browser*
+    ```bash
+    http://127.0.0.1:5000
