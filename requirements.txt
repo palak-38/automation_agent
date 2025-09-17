@@ -1,0 +1,15 @@
+# Core libraries for data handling and API interaction
+datasets
+groq
+tqdm
+pandas
+
+# Libraries for model fine-tuning 
+transformers
+torch
+peft
+bitsandbytes
+accelerate
+
+# Library for evaluation python json_
+scikit-learn
