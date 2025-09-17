@@ -16,8 +16,8 @@ Please find Model Architecture, Fine Tuning Setup and Interaction Logs with the 
 Below are the screenshots of the UI created via gradio, where we paste the chat and extract actionable items, with deadline and assignee.
 
 <img width="1919" height="908" alt="Screenshot 2025-09-16 001157" src="https://github.com/user-attachments/assets/f524d10d-6535-40b2-a102-0b218b90aecb" />
+<img width="1919" height="908" alt="IMG-20250916-WA0019 1" src="https://github.com/user-attachments/assets/b13a609f-e31b-4aaf-aac3-a34008eed81b" />
 
-<img width="1919" height="908" alt="Screenshot 2025-09-16 001157" src="https://github.com/user-attachments/assets/e049bbe9-abf6-4fae-a6da-2da539c0d691" />
 
 ----
 ## 🚀 How to Use
